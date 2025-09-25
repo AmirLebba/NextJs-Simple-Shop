@@ -1,5 +1,7 @@
 "use client";
 
+import type { Product, ProductImage, Price } from "@prisma/client";
+
 const CART_KEY = "cart";
 
 export interface CartItem {
@@ -11,7 +13,7 @@ export interface CartItem {
   quantity: number;
 }
 
-/* ---------- helpers ---------- */
+
 export function getCart(): CartItem[] {
   if (typeof window === "undefined") return [];
   const raw = localStorage.getItem(CART_KEY);
@@ -22,9 +24,15 @@ export function saveCart(items: CartItem[]): void {
   localStorage.setItem(CART_KEY, JSON.stringify(items));
 }
 
-/* ---------- actions ---------- */
+
+
+type ProductWithIncludes = Product & {
+  images: ProductImage[];
+  prices: Price[];
+};
+
 export function addToCart(
-  product: any, // your Product type
+  product: ProductWithIncludes, 
   selectedAttributes: Record<string, string>,
   qty: number = 1
 ): void {
@@ -36,7 +44,7 @@ export function addToCart(
         JSON.stringify(selectedAttributes)
   );
 
-  const imageUrl = product.images?.[0]?.url ?? "/placeholder.png";
+  const imageUrl = product.images[0]?.url ?? "/placeholder.png";
 
   if (exists) {
     exists.quantity += qty;
@@ -44,8 +52,9 @@ export function addToCart(
     current.push({
       productId: product.id,
       name: product.name,
-      imageUrl, // ← store it
+      imageUrl,
       prices: product.prices.map((p) => ({
+        
         amount: p.amount,
         currencySymbol: p.currencySymbol,
       })),

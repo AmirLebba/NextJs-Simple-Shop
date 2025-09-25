@@ -29,10 +29,10 @@ export default function ProductClient({
   };
 
   return (
-    <div className="product-page flex flex-col md:flex-row gap-10 bg-white p-4 border-rounded mt-4 align-center justify-center wrap items-start shadow-lg shadow-gray-500/50 hover:shadow-lg hover:shadow-gray-500/50 transition-shadow duration-300 ease-in-out color-black">
+    <div className="product-page flex flex-col md:flex-row gap-10 bg-white p-4 rounded-lg mt-4 items-start justify-center shadow-lg shadow-gray-500/50 hover:shadow-lg hover:shadow-gray-500/50 transition-shadow duration-300 ease-in-out">
       <ProductGallery images={images} inStock={product.inStock} />
       <form
-        className="product-options-form flex flex-col gap-4 max-w-md w-full md:w-1/2 bg-white p-4 border-rounded mt-4 align-center justify-center wrap shadow-lg shadow-gray-500/50 hover:shadow-lg hover:shadow-gray-500/50 transition-shadow duration-300 ease-in-out color-black"
+        className="product-options-form flex flex-col gap-4 max-w-md w-full md:w-1/2 bg-white p-4 rounded-lg shadow-lg shadow-gray-500/50 hover:shadow-lg hover:shadow-gray-500/50 transition-shadow duration-300 ease-in-out"
         onSubmit={(e) => {
           e.preventDefault();
           handleAddToCart();
