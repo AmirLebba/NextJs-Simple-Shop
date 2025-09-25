@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client" 
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  name     String    @unique
+  products Product[]
+}
+
+model Product {
+  id          String              @id
+  name        String
+  brand       String?
+  description String?
+  inStock     Boolean
+  categoryName String
+  category    Category            @relation(fields: [categoryName], references: [name])
+  images      ProductImage[]
+  prices      Price[]
+  attributes  ProductAttribute[]
+}
+
+model ProductImage {
+  id         Int     @id @default(autoincrement())
+  productId  String
+  product    Product @relation(fields: [productId], references: [id])
+  url        String
+}
+
+model Price {
+  id              Int     @id @default(autoincrement())
+  productId       String
+  product         Product @relation(fields: [productId], references: [id])
+  amount          Float
+  currencyLabel   String
+  currencySymbol  String
+}
+
+model Attribute {
+  id           String              @id
+  name         String
+  type         String
+  items        AttributeItem[]
+  products     ProductAttribute[]
+}
+
+model AttributeItem {
+  id            String    @id
+  attributeId   String
+  attribute     Attribute @relation(fields: [attributeId], references: [id])
+  displayValue  String
+  value         String
+}
+
+model ProductAttribute {
+  productId   String
+  attributeId String
+  product     Product   @relation(fields: [productId], references: [id])
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+
+  @@id([productId, attributeId])
+}

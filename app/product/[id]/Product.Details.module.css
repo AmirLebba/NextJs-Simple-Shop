@@ -1,0 +1,114 @@
+/* =====  DESKTOP  ===== */
+.product-modal {
+  display: flex;
+  gap: 100px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  align-items: flex-start;      /* keep tops aligned */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ---------- gallery ---------- */
+.product-gallery {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;      /* thumbnail column stays at top */
+
+  .gallery-thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: auto;
+    max-height: 500px;
+    position: sticky;           /* stay while main scrolls */
+    top: 0;
+
+    img {
+      width: 79px;
+      height: 80px;
+      object-fit: cover;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+      &.active { border: 2px solid black; }
+    }
+  }
+
+  .gallery-main {
+    position: relative;
+    img {
+      width: 575px;
+      max-height: 478px;
+      object-fit: cover;
+    }
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      &.prev { left: 5px; }
+      &.next { right: 5px; }
+    }
+  }
+}
+
+/* ---------- attributes ---------- */
+.product-details {
+  flex: 1;
+
+  h2 { /* your heading vars */ }
+
+  .attribute-group .attribute-options {
+    display: flex;
+    gap: 10px;
+
+    /* TEXT buttons */
+    button {
+      width: 63px;
+      height: 45px;
+      padding: 8px;
+      border: 1px solid gray;
+      background: white;
+      cursor: pointer;
+      &.selected { border-color: var(--color-secondary); }
+    }
+
+    /* SWATCH buttons */
+    button[style*="background-color"] {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border-radius: 0;
+      &.selected { border: 2px solid var(--color-secondary); }
+    }
+  }
+
+  /* price / cart / description … keep your rules */
+}
+
+/* =====  MOBILE  ===== */
+@media screen and (max-width: 700px) {
+  .product-gallery {
+    flex-direction: column;
+    align-items: center;
+
+    .gallery-thumbnails { display: none; }
+    .gallery-main img {
+      width: 100%;
+      max-height: 300px;
+    }
+  }
+
+  .product-details {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
