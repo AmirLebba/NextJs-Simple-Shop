@@ -2,11 +2,10 @@ import { getProductsByCategory } from "@/app/lib/actions";
 import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
-import type { ProductImage, Price } from '@prisma/client';
-import type { Product } from '@//app/lib/actions';
+import type { Price } from "@prisma/client";
+import type { Product } from "@/app/lib/actions";
 
 type ProductWithIncludes = Product & {
-  images: ProductImage[]; 
   prices: Price[];
 };
 
