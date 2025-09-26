@@ -35,9 +35,10 @@ export async function getAllCategories() {
   return prisma.category.findMany({ orderBy: { name: "asc" } });
 }
 
+
 /* 4.  single product + full details */
 export async function getProductById(id?: string) {
-  if (!id || typeof id !== "string") return null; // ← never hit DB with bad id
+  if (!id || typeof id !== "string") return null; 
 
   return prisma.product.findUnique({
     where: { id },

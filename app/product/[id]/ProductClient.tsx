@@ -53,7 +53,7 @@ export default function ProductClient({
           disabled={!isAllSelected || !product.inStock}
           inStock={product.inStock}
         />
-        <Description description={product.description} />
+        <Description description={product.description ?? ''} />
       </form>
     </div>
   );

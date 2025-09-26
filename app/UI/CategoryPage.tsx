@@ -2,12 +2,9 @@ import { getProductsByCategory } from '@/app/lib/actions';
 import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
-import type { Product, ProductImage, Price } from '@prisma/client';
 
-type ProductWithIncludes = Product & {
-  images: ProductImage[];
-  prices: Price[];
-};
+
+
 
 
 interface Props {
