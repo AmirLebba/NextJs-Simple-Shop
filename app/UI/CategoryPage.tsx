@@ -1,14 +1,16 @@
-import { getProductsByCategory } from '@/app/lib/actions';
-import Link from 'next/link';
-import Image from 'next/image';
-import clsx from 'clsx';
+import { getProductsByCategory } from "@/app/lib/actions";
+import Link from "next/link";
+import Image from "next/image";
+import clsx from "clsx";
+import type { Product, ProductImage, Price } from "@prisma/client";
 
-
-
-
+type ProductWithIncludes = Product & {
+  images: ProductImage[];
+  prices: Price[];
+};
 
 interface Props {
-  category: 'tech' | 'clothes' | 'all'; 
+  category: "tech" | "clothes" | "all";
 }
 
 export default async function CategoryPage({ category }: Props) {
@@ -17,12 +19,12 @@ export default async function CategoryPage({ category }: Props) {
   return (
     <>
       <h1 className="catigoryName text-3xl font-bold bg-white p-4 text-gray-900 mt-0">
-        {category === 'all' ? 'All Products' : `${category} Products`}
+        {category === "all" ? "All Products" : `${category} Products`}
       </h1>
 
       <div className="products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 mb-12">
-        {products.map((p) => {
-          const src = p.images[0]?.url ?? '/placeholder.png';
+        {products.map((p: ProductWithIncludes) => {
+          const src = p.images[0]?.url ?? "/placeholder.png";
           const price = p.prices[0];
 
           return (
@@ -37,7 +39,7 @@ export default async function CategoryPage({ category }: Props) {
                   alt={p.name}
                   width={300}
                   height={450}
-                  className={clsx('w-full h-full object-cover', {
+                  className={clsx("w-full h-full object-cover", {
                     grayscale: !p.inStock,
                   })}
                 />
