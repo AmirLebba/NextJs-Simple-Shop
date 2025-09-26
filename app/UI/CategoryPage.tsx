@@ -2,13 +2,10 @@ import { getProductsByCategory } from "@/app/lib/actions";
 import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
-import type { Price } from "@prisma/client";
+
 import type { Product } from "@/app/lib/actions";
 
-type ProductWithIncludes = Product & {
-  prices: Price[];
-};
-
+type ProductWithIncludes = Product;
 interface Props {
   category: "tech" | "clothes" | "all";
 }
@@ -24,6 +21,7 @@ export default async function CategoryPage({ category }: Props) {
 
       <div className="products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 mb-12">
         {products.map((p: ProductWithIncludes) => {
+          if (!p) return null;
           const src = p.images[0]?.url ?? "/placeholder.png";
           const price = p.prices[0];
 
