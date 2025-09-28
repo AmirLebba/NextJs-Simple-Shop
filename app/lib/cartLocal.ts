@@ -1,6 +1,6 @@
 "use client";
 
-import type { Product, ProductImage, Price } from "@prisma/client";
+import type { Product } from "@/app/lib/actions";
 
 const CART_KEY = "cart";
 
@@ -8,11 +8,10 @@ export interface CartItem {
   productId: string;
   name: string;
   imageUrl: string;
-  prices: { amount: number; currencySymbol: string }[];
+  prices: { amount: number; currencySymbol: string }[]; // plain shape
   selectedAttributes: Record<string, string>;
   quantity: number;
 }
-
 
 export function getCart(): CartItem[] {
   if (typeof window === "undefined") return [];
@@ -24,18 +23,14 @@ export function saveCart(items: CartItem[]): void {
   localStorage.setItem(CART_KEY, JSON.stringify(items));
 }
 
-
-
-type ProductWithIncludes = Product & {
-  images: ProductImage[];
-  prices: Price[];
-};
+type ProductWithIncludes = Product;
 
 export function addToCart(
-  product: ProductWithIncludes, 
+  product: ProductWithIncludes,
   selectedAttributes: Record<string, string>,
   qty: number = 1
 ): void {
+  if (!product) return;
   const current = getCart();
   const exists = current.find(
     (i) =>
@@ -54,7 +49,6 @@ export function addToCart(
       name: product.name,
       imageUrl,
       prices: product.prices.map((p) => ({
-        
         amount: p.amount,
         currencySymbol: p.currencySymbol,
       })),
