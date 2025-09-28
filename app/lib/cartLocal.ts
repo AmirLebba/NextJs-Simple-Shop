@@ -48,10 +48,12 @@ export function addToCart(
       productId: product.id,
       name: product.name,
       imageUrl,
-      prices: product.prices.map((p) => ({
-        amount: p.amount,
-        currencySymbol: p.currencySymbol,
-      })),
+      prices: product.prices.map(
+        (p: { amount: number; currencySymbol: string }) => ({
+          amount: p.amount,
+          currencySymbol: p.currencySymbol,
+        })
+      ),
       selectedAttributes,
       quantity: qty,
     });
