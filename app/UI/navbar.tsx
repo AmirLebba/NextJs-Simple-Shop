@@ -6,7 +6,7 @@ import clsx from "clsx";
 import CartDropdown from "./CartDropdown";
 
 interface Props {
-  categories: Array<{ id: string; name: string }>;
+  categories: { name: string }[]; 
 }
 
 export default function Navbar({ categories }: Props) {
